@@ -1,0 +1,31 @@
+<html>
+    <head>
+       
+    </head>
+    <body>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 margin">
+            <div class="brand_box">
+                <img src="{{myid.p_img.url}}" alt="img" />
+                <h3>$<strong class="red">{{myid.p_price}}</strong></h3>`
+                <span>{{myid.p_name}}</span> <br>   
+                <span>{{myid.p_desc}}</span><br>
+
+                <form action="{% url 'addcart' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="number" name="p" value="{{myid.id}}"  />
+                    <input type="number" name="qty"  />
+                    <input type="submit" value="Add to Cart" />
+                </form>
+           </div>
+        </div> 
+        
+       
+        
+    </body>
+</html>
+
+
+                
+
+
+ 

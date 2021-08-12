@@ -1,0 +1,24 @@
+{% extends 'master.html' %}
+
+
+{% block displayphones %}
+
+{% if myproducts %}
+
+
+    {% for i in myproducts %}
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 margin">
+            <div class="brand_box">
+                <img src="{{i.p_img.url}}" alt="img" />
+                <h3>$<strong class="red">{{i.p_price}}</strong></h3>
+                <span><a href="{% url 'productdetail' i.id %}">{{i.p_name}}</a></span>    
+           </div>
+   </div>
+    {% endfor %}
+
+
+
+
+{% endif %}
+
+{% endblock %}
