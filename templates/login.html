@@ -1,0 +1,33 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'signUp.css' %}" />
+    </head>
+    <body>
+        <form action="#" method="post">
+            {% csrf_token %}
+            <h1 align = 'center'>Login</h1>
+                  <p>
+                      <label for="User Name" class="floatLabel">User Name</label>
+                      <input type="text" name="myuser" />
+                  </p>
+                  <p>
+                      <label for="password" class="floatLabel">Password</label>
+                      <input id="password" name="password" type="password">
+                      <!-- <span>Enter a password longer than 8 characters</span> -->
+                  </p>
+                 
+                  <p>
+                      <input type="submit" value="Login" id="submit">
+                      <a href="{% url 'signUp' %}">SignUp</a>
+                  </p>
+              </form>
+
+              {% if error%}
+
+              {{error}}
+
+              {% endif %}
+    </body>
+</html>	
+

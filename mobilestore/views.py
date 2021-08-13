@@ -1,14 +1,18 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render,HttpResponse,HttpResponseRedirect
-from . models import Product
-from .forms import ProductForm
+from django.shortcuts import render,HttpResponse,HttpResponseRedirect,redirect
+from . models import Product,Users
+from .forms import ProductForm,UsersForm
 
 # Create your views here.
 
 def homepage(request):
-    #request.session.clear()
-    myproducts = Product.objects.all()
-    return render(request,'home.html',{'myproducts':myproducts})
+    if request.session.has_key('yes'):
+        myproducts = Product.objects.all()
+        return render(request,'home.html',{'myproducts':myproducts})
+    else:
+        return redirect(login)
+    
+       
 
 def productDetail(request,id):
     if request.method == 'POST':
@@ -49,4 +53,33 @@ def showcart(request):
         return HttpResponse('No Item In Cart')
 
 
-    
+def signUp(request):
+    if request.method == "POST":
+        uname = request.POST['myuser']
+        passw = request.POST['password']
+        ema = request.POST['email']
+        myusers = Users.objects.filter(u_name = uname)
+        if myusers:
+            return render(request,'signUp.html',{'error':'Already Exists '})
+        else:
+            newUser = Users.objects.create(u_name = uname , u_pass = passw , u_email = ema)
+            newUser.save()
+            return render(request,'signUp.html',{'error':'Successfully Register '})     
+    else:
+        return render(request,'signUp.html')
+
+def login(request):
+    if request.session.has_key('yes'):
+        return redirect('/')
+
+    if request.method == 'POST':
+        nm = request.POST['myuser']
+        passw = request.POST['password']
+        loginuser = Users.objects.filter(u_name = nm , u_pass = passw)
+        if  not loginuser:
+            return redirect(login)
+        else:
+            request.session['yes']=True
+            return redirect('/')
+    else:
+        return render(request,'login.html')

@@ -11,3 +11,12 @@ class Product(models.Model):
     @staticmethod
     def getProductsByIds(ids):
         return Product.objects.filter(id__in = ids)
+
+
+class Users(models.Model):
+    u_name = models.CharField(max_length=20)
+    u_pass = models.CharField(max_length=20)
+    u_email = models.EmailField()
+
+    def __str__(self):
+        return self.u_name
